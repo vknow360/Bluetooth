@@ -37,14 +37,14 @@ public class BluetoothToggle extends AndroidNonvisibleComponent {
 
     @SimpleFunction(description = "Disables bluetooth")
     public void DisableBluetooth(){
-    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-    adapter.enable();
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    mBluetoothAdapter.enable();
     }
 
     @SimpleFunction(description = "Enables Bluetooth")
     public void EnableBluetooth(){
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        adapter.disable();
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter.disable();
     }
     @SimpleFunction(description = "Tell bluetooth is enabled or not Bruh")
     public void CheckState(){
