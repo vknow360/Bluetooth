@@ -10,6 +10,7 @@ import com.google.appinventor.components.runtime.EventDispatcher;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.pm.PackageManager;
 
 @DesignerComponent(
         version = 1,
@@ -57,6 +58,32 @@ public class BluetoothToggle extends AndroidNonvisibleComponent {
         BluetoothEnabled();
       }
 }
+    @SimpleFunction(description = "Check if BLE is supported or not ")
+    public boolean isBLESupported(){
+        
+       if ((this.context).getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)){
+          return true;
+        }else{
+          return false;
+        }
+
+    }
+        
+     @SimpleFunction(description = "Enable BLE")
+    public void EnableBLE(){
+        final BluetoothManager bluetoothManager = (this.activity).getSystemService(BluetoothManager.class);
+        BluetoothAdapter bluetoothAdapter = null;
+        if (bluetoothManager != null) {
+        bluetoothAdapter = bluetoothManager.getAdapter();
+        }
+
+    if ((bluetoothAdapter != null) && !bluetoothAdapter.isEnabled()) {
+        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        (this.activity).startActivityForResult(enableBtIntent, 0);
+     }
+
+    }
+        
     @SimpleEvent()
     public void BluetoothNotSupported() {
         EventDispatcher.dispatchEvent(this, "BluetoothNotSupported");
