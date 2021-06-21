@@ -47,20 +47,17 @@ public class BluetoothToggle extends AndroidNonvisibleComponent {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothAdapter.disable();
     }
-    @SimpleFunction(description = "Tell bluetooth is enabled or not Bruh")
-    public void CheckState(){
+    @SimpleFunction(description="Returns whether bluetooth is enabled or not,empty string if bluetooth is not supported")
+    public String IsEnabled(){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-        BluetoothNotSupported();
-      } else if (!mBluetoothAdapter.isEnabled()) {
-        BluetoothDisabled();
-      } else {
-        BluetoothEnabled();
-      }
-}
-    @SimpleFunction(description = "Check if BLE is supported or not ")
-    public boolean isBLESupported(){
+        if(mBluetoothAdapter == null){ // ohhhh :(
+                return "";
+        }    
+        return mBluetoothAdapter.isEnabled();
+    }
         
+    @SimpleFunction(description = "Check if BLE is supported or not ")
+    public boolean IsBLESupported(){
        if ((this.context).getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)){
           return true;
         }else{
@@ -81,21 +78,6 @@ public class BluetoothToggle extends AndroidNonvisibleComponent {
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         (this.activity).startActivityForResult(enableBtIntent, 0);
      }
-
     }
-        
-    @SimpleEvent()
-    public void BluetoothNotSupported() {
-        EventDispatcher.dispatchEvent(this, "BluetoothNotSupported");
-    }
-    @SimpleEvent()
-    public void BluetoothDisabled() {
-        EventDispatcher.dispatchEvent(this, "BluetoothDisabled");
-    }
-    @SimpleEvent()
-    public void BluetoothEnabled() {
-        EventDispatcher.dispatchEvent(this, "BluetoothEnabled");
-    }
-
-    }
+}
 
